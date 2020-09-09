@@ -59,8 +59,12 @@ const genID = () => {
 app.post("/api/persons", (req, res) => {
   const body = req.body;
 
+  //check if name exists already
+  const name = persons.every((person) => person.name !== req.body.name);
+
   //check if name is missing - 404 error if true
-  if (!body.name) return res.status(404).json({ error: "missing name" });
+  if (!body.name || !body.number || !name)
+    return res.status(404).json({ error: "missing name" });
 
   //create person if data is vaid
   const person = {
