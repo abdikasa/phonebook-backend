@@ -52,6 +52,28 @@ app.get("/info", (req, res) => {
     <p>${new Date()}</p>`);
 });
 
+const genID = () => {
+  return Math.floor(Math.random() * 5000) + 1;
+};
+
+app.post("/api/persons", (req, res) => {
+  const body = req.body;
+
+  //check if name is missing - 404 error if true
+  if (!body.name) return res.status(404).json({ error: "missing name" });
+
+  //create person if data is vaid
+  const person = {
+    name: body.name,
+    number: body.number,
+    id: genID(),
+  };
+
+  //add person with all the other contacts
+  persons = person.concat(person);
+  res.json(persons);
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
