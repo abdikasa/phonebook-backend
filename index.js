@@ -64,7 +64,9 @@ app.post("/api/persons", (req, res) => {
 
   //check if name is missing - 404 error if true
   if (!body.name || !body.number || !name)
-    return res.status(404).json({ error: "missing name" });
+    return res
+      .status(404)
+      .json({ error: "missing name/name must be unique/phone number missing" });
 
   //create person if data is vaid
   const person = {
