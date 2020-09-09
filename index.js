@@ -1,4 +1,5 @@
 const express = require("express");
+const { response } = require("express");
 const app = express();
 app.use(express.json());
 
@@ -26,7 +27,7 @@ app.get("/", (req, res) => {
   res.end("hello world");
 });
 
-app.get("/api/persons", (rq, res) => {
+app.get("/api/persons", (req, res) => {
   res.json(phone);
 });
 
@@ -37,6 +38,12 @@ app.get("/api/persons/:id", (req, res) => {
   //if person's id doesn't exist -- undefined
   if (!person) res.status(404).end();
   res.json(person);
+});
+
+app.delete("/api/persons/:id", (req, res) => {
+  const id = Number(req.params.id);
+  persons = persons.filter((person) => person.id !== id);
+  res.status(204).end();
 });
 
 app.get("/info", (req, res) => {
